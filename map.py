@@ -1,3 +1,4 @@
+from triangle import Triangle
 # Main map in Trilemma depicting triangle logic and game state
 class Map:
     # Constructors

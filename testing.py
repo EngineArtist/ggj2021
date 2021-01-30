@@ -1,3 +1,4 @@
+from map import Map
 # The pyramid example from first example game run
 testmap = Map(3, 8, 4)
 # Active the "pyramid" for gameplay
