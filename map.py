@@ -37,36 +37,36 @@ class Map:
         if(line == 0 or line == '_'):
             if(direction):
                 for j in range(0, coord):
-                    for i in range(xsize):
+                    for i in range(self.xsize):
                         self.map[i,j].flip()
                         ## TODO: Send message to graphics device to draw animation for flip(s)?
             else:                
-                for j in range(coord+1, ysize):
-                    for i in range(xsize):
+                for j in range(coord+1, self.ysize):
+                    for i in range(self.xsize):
                         self.map[i,j].flip()
                         ## TODO: Send message to graphics device to draw animation for flip(s)?
         elif(line == 1 or line == '/'):
             if(direction):
-                for j in range(ysize):
-                    for i in range(xsize):
+                for j in range(self.ysize):
+                    for i in range(self.xsize):
                         if(i > coord - j*2):
                             self.map[i,j].flip()                            
                             ## TODO: Send message to graphics device to draw animation for flip(s)?
             else:
-                for j in range(ysize):
-                    for i in range(xsize) :
+                for j in range(self.ysize):
+                    for i in range(self.xsize) :
                         if(i <= coord - j*2):
                             self.map[i,j].flip()                            
                             ## TODO: Send message to graphics device to draw animation for flip(s)?
         elif(line == 2 or line == '\\'):
             if(direction):
-                for i in range(coord+1, xsize):
-                    for j in range(ysize) :
+                for i in range(coord+1, self.xsize):
+                    for j in range(self.ysize) :
                         self.map[i,j].flip()
                         ## TODO: Send message to graphics device to draw animation for flip(s)?
             else:                
                 for i in range(0,coord):
-                    for j in range(ysize):
+                    for j in range(self.ysize):
                         self.map[i,j].flip()
                         ## TODO: Send message to graphics device to draw animation for flip(s)?
         
