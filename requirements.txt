@@ -1,1 +1,2 @@
-pygame>=2.0.0
+pysdl2-dll
+pysdl2
