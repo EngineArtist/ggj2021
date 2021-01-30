@@ -11,10 +11,10 @@ class Triangle:
         self.coloured = not self.coloured
 
     # Setters
-    def setActivate(self):
+    def setActive(self):
         self.active = True
 
-    def setDeactivate(self):
+    def setInactive(self):
         self.active = False
 
     def setActiveState(self, state):
