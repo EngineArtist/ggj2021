@@ -1,13 +1,10 @@
 import os
 import sys
 import ctypes
+import math
 from sdl2 import *
 from sdl2.sdlimage import *
-
-
-TRI_NULL = 0
-TRI_ON   = 1
-TRI_OFF  = 2
+from map import Map
 
 
 class State:
@@ -16,9 +13,13 @@ class State:
         self.window = None
         self.renderer = None
         self.running = True
-        self.map_width = 8
-        self.map_height = 4
-        self.map = [TRI_ON for x in range(self.map_height*self.map_width)]
+        self.map = None
+        self.map_x_offset = 50
+        self.map_y_offset = 75
+        self.tex_x_size = 128
+        self.tex_y_size = 128
+        self.tex_x_displace = 70
+        self.tex_y_displace = 128
 
 
 _gb = State()
@@ -57,21 +58,58 @@ def textures_term():
         SDL_DestroyTexture(v)
 
 
+def map_read():
+    _gb.map = Map(5, 10, 6)
+    for x in range(len(_gb.map.map)):
+        for y in range(len(_gb.map.map[0])):
+            _gb.map.setActiveStateAt(x, y, True)
+
+
 def map_render():
     SDL_RenderCopy(_gb.renderer, _gb.tex['bg'], None, None)
-    for i in range(len(_gb.map)):
-        t = _gb.map[i]
-        if t == TRI_NULL: continue
-        t = _gb.tex['triangle01'] if (t == TRI_ON) else _gb.tex['test']
-        x = i%_gb.map_width
-        f = x%2
-        y = int(i/_gb.map_width)
-        SDL_RenderCopyEx(_gb.renderer, t, None, SDL_Rect(x*64 + 200 + y*64, y*128 + 200, 128, 128), 0 if (f == 1) else 180, None, SDL_FLIP_NONE)
+    for x in range(len(_gb.map.map)):
+        for y in range(len(_gb.map.map[0])):
+            t = _gb.map.map[x][y]
+            if not t.active: continue
+            tx = _gb.tex['triangle01'] if t.coloured else _gb.tex['triangle05']
+            f = x%2
+            SDL_RenderCopyEx(
+                _gb.renderer,
+                tx,
+                None,
+                SDL_Rect(
+                    x*_gb.tex_x_displace + _gb.map_x_offset + y*_gb.tex_x_displace,
+                    y*_gb.tex_y_displace + _gb.map_y_offset,
+                    _gb.tex_x_size,
+                    _gb.tex_y_size
+                ),
+                0 if (f == 1) else 180,
+                None,
+                SDL_FLIP_NONE
+            )
     SDL_RenderPresent(_gb.renderer)
 
 
+def dist(tx, ty, mx, my):
+    return math.sqrt((mx - tx)**2 + (my - ty)**2)
+
+
 def input_handle(event):
-    pass
+    mx = event.motion.x
+    my = event.motion.y
+    for x in range(len(_gb.map.map)):
+        for y in range(len(_gb.map.map[0])):
+            tx = x*_gb.tex_x_displace + _gb.map_x_offset + y*_gb.tex_x_displace + _gb.tex_x_size/2
+            ty = y*_gb.tex_y_displace + _gb.map_y_offset + _gb.tex_y_size/2
+            if dist(tx, ty, mx, my) < 35:
+                if not _gb.map.map[x][y].active:
+                    _gb.map.map[x][y].setActive()
+                    _gb.map.map[x][y].setUncoloured()
+                else:
+                    if not _gb.map.map[x][y].coloured:
+                        _gb.map.map[x][y].setColoured()
+                    else:
+                        _gb.map.map[x][y].setInactive()
 
 
 def game_loop():
@@ -94,6 +132,7 @@ def game_loop():
 def main():
     global _gb
     game_init()
+    map_read()
     map_render()
     game_loop()
     game_term()
