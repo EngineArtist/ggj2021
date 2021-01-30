@@ -18,13 +18,13 @@ class Map:
             for j in len(startActives[i]):
                 # TODO? Sanity checkers to see if dimensions match
                 if(startActives[i,j]):
-                    self.map[i,j].setActive()                
+                    self.map[i][j].setActive()                
         # startColours is a boolean 2-dim array indicating starting colour for each map triangle
         for i in len(startColours):
             for j in len(startColours[i]):
                 # TODO? Sanity checkers to see if dimensions match
                 if(startColours[i,j]):
-                    self.map[i,j].setColoured()
+                    self.map[i][j].setColoured()
                     
     # Player line-operator
     # Two 'line' type syntax can be used;
