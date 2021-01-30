@@ -28,13 +28,13 @@ class Map:
                     
     # Player line-operator
     # Two 'line' type syntax can be used;
-    # - Integers define as 0 as a horizontal line at given coord, 1 as '/' shaped diagonal line, 2 as '\' shaped diagonal line
+    # - Integers define as 0 as a horizontal line at given y-coord, 1 as '/' shaped diagonal line at given x-coord, 2 as '\' shaped diagonal line at given x-coord
     # - '_' symbol is a horizontal line, '/' is diagonal in corresponding direction, '\' the other diagonal
     # Notice that a single coordinate uniquely defines location when coupled with direction
     # Direction is a boolean indicating which way the arrow points (True is upwards or rightwards)
     # TODO: The coordinates still need double-checking, to make sure they work right...
     def line(self, line, coord, direction):
-        if(line == 0 | line == '_'):
+        if(line == 0 or line == '_'):
             if(direction):
                 for j in range(0, coord):
                     for i in range(xsize):
@@ -45,7 +45,7 @@ class Map:
                     for i in range(xsize):
                         self.map[i,j].flip()
                         ## TODO: Send message to graphics device to draw animation for flip(s)?
-        elif(line == 1 | line == '/'):
+        elif(line == 1 or line == '/'):
             if(direction):
                 for j in range(ysize):
                     for i in range(xsize):
@@ -58,7 +58,7 @@ class Map:
                         if(i <= coord - j*2):
                             self.map[i,j].flip()                            
                             ## TODO: Send message to graphics device to draw animation for flip(s)?
-        elif(line == 2 | line == '\\'):
+        elif(line == 2 or line == '\\'):
             if(direction):
                 for i in range(coord+1, xsize):
                     for j in range(ysize) :
@@ -73,14 +73,27 @@ class Map:
 
     # Test if map has been solved successfully; true if so, false if not
     def validate(self):
-        if(self.target == self.countColoured()):
-            return True
-        else:
-            return False
+        return self.target == self.countColoured()
 
     # Get current map[xsize][ysize] of Triangle-objects
     def getMap(self):
         return self.map
+
+    # Set active state at given coordinates for triangle
+    def setActiveStateAt(self, x, y, active):
+        if(x<self.xsize and y<self.ysize and x>=0 and y>=0):
+            self.map[x][y].setActiveState(active)
+            return True
+        else:
+            return False
+
+    # Set coloured state at given coordinates for triangle
+    def setColourStateAt(self, x, y, coloured):
+        if(x<self.xsize and y<self.ysize and x>=0 and y>=0):
+            self.map[x][y].setColouredState(coloured)
+            return True
+        else:
+            return False
 
     ## INTERNAL USE
 
@@ -93,14 +106,17 @@ class Map:
         count = 0
         for i in range(self.xsize):
             for j in range(self.ysize):
-                if(self.map[i][j].getActive() & self.map[i][j].getColoured()):
+                if(self.map[i][j].getActive() and self.map[i][j].getColoured()):
                     count = count + 1
         return count                            
     
     # Flip triangle at target location
     def flipAt(self, x, y):
-        if(x<self.xsize & y<self.ysize & x>=0 & y>=0):
+        if(x<self.xsize and y<self.ysize and x>=0 and y>=0):
             self.map[x][y].flip()
+            return True
+        else:
+            return False
 
     # Print custom object output
     def __str__(self):
@@ -109,6 +125,19 @@ class Map:
                 "]\nwith target count of: " + str(self.target) +
                 "\nwith current coloured count of: " + str(self.countColoured()))
     
-    
-    
+    # Print map status as somewhat understandable text output
+    def mapASCII(self):
+        string = "Map, with [ ]  being triangles, - being inactive, X coloured (active) and 0 as uncoloured (active) statuses"
+        for i in range(self.xsize):
+            string = string + "\n" + str(" " * i) # Line change and add a bit of buffer to the left according to x coord
+            for j in range(self.ysize):
+                if(self.map[i][j].getActive()):
+                    if(self.map[i][j].getColoured()):
+                        string = string + "[X] "
+                    else:
+                        string = string + "[0] "
+                else:
+                    string = string + " -  "
+            
+        return string    
         

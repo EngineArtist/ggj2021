@@ -16,12 +16,18 @@ class Triangle:
 
     def setDeactivate(self):
         self.active = False
+
+    def setActiveState(self, state):
+        self.active = state
         
     def setColoured(self):
         self.coloured = True
 
     def setUncoloured(self):
         self.coloured = False
+
+    def setColouredState(self, state):
+        self.coloured = state
         
     # Getters
     def getActive(self):
