@@ -56,14 +56,14 @@ class Map:
             if(direction):
                 for j in range(self.ysize):
                     for i in range(self.xsize):
-                        if(i >= coord - j*2):
+                        if(i >= coord - j*2 - 1):
                             self.map[i][j].flip()
                             self.flipcount = self.flipcount + 1
                             ## TODO: Send message to graphics device to draw animation for flip(s)?
             else:
                 for j in range(self.ysize):
                     for i in range(self.xsize) :
-                        if(i < coord - j*2):
+                        if(i < coord - j*2 - 1):
                             self.map[i][j].flip()
                             self.flipcount = self.flipcount + 1
                             ## TODO: Send message to graphics device to draw animation for flip(s)?

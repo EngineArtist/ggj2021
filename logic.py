@@ -17,6 +17,7 @@ def mouse_button_down(event):
                 _gb.line_draw = True
                 _gb.line_coord_x = x
                 _gb.line_coord_y = y
+                _gb.line_orientation = 0
                 _gb.line_start_x = int(tx)
                 _gb.line_start_y = int(ty)
                 _gb.line_end_x = _gb.line_start_x + 2*_gb.tex_x_displace
@@ -25,21 +26,21 @@ def mouse_button_down(event):
 
 
 def corrected_coord(x, y):
-    return x + y*2
+    return x + y
 
 
 def mouse_button_up(event):
     _gb.line_draw = False
     if _gb.line_orientation >= 0:
         if (_gb.line_orientation == 0) or (_gb.line_orientation == 3):
-            print("- " + str(_gb.line_coord_y) + " " + str(_gb.line_orientation))
+            #print("- " + str(_gb.line_coord_y) + " " + str(_gb.line_orientation))
             _gb.map.line(0, _gb.line_coord_y, _gb.line_orientation == 3)
         elif (_gb.line_orientation == 1) or (_gb.line_orientation == 4):            
             _gb.map.line(1, corrected_coord(_gb.line_coord_x, _gb.line_coord_y), _gb.line_orientation == 1)
-            print("/ " + str(corrected_coord(_gb.line_coord_x, _gb.line_coord_y)) + " " + str(_gb.line_orientation))
+            #print("/ " + str(corrected_coord(_gb.line_coord_x, _gb.line_coord_y)) + " " + str(_gb.line_orientation))
         elif (_gb.line_orientation == 2) or (_gb.line_orientation == 5):
             _gb.map.line(2, _gb.line_coord_x, _gb.line_orientation == 2)
-            print("\\ " + str(_gb.line_coord_x) + " " + str(_gb.line_orientation))
+            #print("\\ " + str(_gb.line_coord_x) + " " + str(_gb.line_orientation))
 
 
 def mouse_motion(event):
