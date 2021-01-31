@@ -1,6 +1,6 @@
 from map import Map
 
-class levels:
+class Levels:
     # When creating the levels class, presumably we start at the first level
     def __init__(self):
         self.current_level = 0
