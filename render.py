@@ -74,3 +74,23 @@ def map_render():
         )
     # Finally call SDL_RenderPresent on an SDL_Renderer to display the new frame on screen.
     SDL_RenderPresent(_gb.renderer)
+
+def target_render():
+    '''
+    Render the target of desired white triangles in final solution
+    '''
+    numnames = ['num_0', 'num_1', 'num_2', 'num_3', 'num_4', 'num_5', 'num_6', 'num_7', 'num_8', 'num_9']
+    SDL_RenderCopy(_gb.renderer,
+                   _gb.tex[numnames[_gb.map.getTarget()]],
+                           None,
+                           SDL_Rect(
+                               _gb.target_x,
+                               _gb.target_y,
+                               62, # Hard coded size of the num textures
+                               62
+                            ),
+                           0,
+                           None,
+                           SDL_FLIP_NONE
+                    )
+    SDL_RenderPresent(_gb.renderer)    

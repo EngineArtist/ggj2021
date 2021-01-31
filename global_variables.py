@@ -25,6 +25,8 @@ class State:
         self.line_start_y = 0
         self.line_end_x = 1200
         self.line_end_y = 900
+        self.target_x = 0
+        self.target_y = 0
 
 
 # An instance of the global state storage
