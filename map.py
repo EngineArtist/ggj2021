@@ -1,4 +1,5 @@
 from triangle import Triangle
+
 # Main map in Trilemma depicting triangle logic and game state
 class Map:
     # Constructors
@@ -19,17 +20,11 @@ class Map:
         # startActives is a boolean 2-dim array indicating if the triangle should be part of active game map
         for i in range(len(startActives)):
             for j in range(len(startActives[i])):
-                # TODO? Sanity checkers to see if dimensions match
-                #if(startActives[i][j]):
-                ## TODO transpose required
                 if(startActives[i][j]):
                     self.map[i][j].setActive()                
         # startColours is a boolean 2-dim array indicating starting colour for each map triangle
         for i in range(len(startColours)):
             for j in range(len(startColours[i])):
-                # TODO? Sanity checkers to see if dimensions match                
-                #if(startColours[i][j]):
-                ## TODO transpose required
                 if(startColours[i][j]):
                     self.map[i][j].setColoured()
                     
@@ -56,22 +51,24 @@ class Map:
                         self.flipcount = self.flipcount + 1
                         ## TODO: Send message to graphics device to draw animation for flip(s)?
         elif(line == 1 or line == '/'):
+            coord = coord * 2
             self.linecount = self.linecount + 1
             if(direction):
                 for j in range(self.ysize):
                     for i in range(self.xsize):
-                        if(i >= coord - j*2 + 1):
+                        if(i >= coord - j*2):
                             self.map[i][j].flip()
                             self.flipcount = self.flipcount + 1
                             ## TODO: Send message to graphics device to draw animation for flip(s)?
             else:
                 for j in range(self.ysize):
                     for i in range(self.xsize) :
-                        if(i < coord - j*2 + 1):
+                        if(i < coord - j*2):
                             self.map[i][j].flip()
                             self.flipcount = self.flipcount + 1
                             ## TODO: Send message to graphics device to draw animation for flip(s)?
         elif(line == 2 or line == '\\'):
+            coord = coord * 2
             self.linecount = self.linecount + 1
             if(direction):
                 for i in range(coord, self.xsize):
@@ -153,7 +150,8 @@ class Map:
     def mapASCII(self):
         string = "Map, with [ ]  being triangles, - being inactive, X coloured (active) and 0 as uncoloured (active) statuses"
         for j in range(self.ysize):
-            string = string + "\n" + str(" " * j) # Line change and add a bit of buffer to the left according to x coord
+            # Line change and add a bit of buffer to the left according to x coord
+            string = string + "\n" + str(" " * j) 
             for i in range(self.xsize):
                 if(self.map[i][j].getActive()):
                     if(self.map[i][j].getColoured()):
