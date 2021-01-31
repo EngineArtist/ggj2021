@@ -8,12 +8,12 @@ from tmath import *
 def mouse_button_down(event):
     mx = event.motion.x
     my = event.motion.y
-    for x in range(int(len(_gb.map.map)/2) + 1):
-        for y in range(len(_gb.map.map[0]) + 1):
+    jmp = False
+    for x in range(int(len(_gb.map.map)/2) + 10):
+        for y in range(len(_gb.map.map[0]) + 10):
             tx = x*2*_gb.tex_x_displace + _gb.map_x_offset + y*_gb.tex_x_displace
             ty = y*_gb.tex_y_displace + _gb.map_y_offset
-            if dist(tx, ty, mx, my) < 64:
-                print(str(x) + ', ' + str(y))
+            if dist(tx, ty, mx, my) < 80:
                 _gb.line_draw = True
                 _gb.line_coord_x = x
                 _gb.line_coord_y = y
@@ -22,7 +22,9 @@ def mouse_button_down(event):
                 _gb.line_start_y = int(ty)
                 _gb.line_end_x = _gb.line_start_x + 2*_gb.tex_x_displace
                 _gb.line_end_y = _gb.line_start_y
+                jmp = True
                 break
+        if jmp: break
 
 
 def corrected_coord(x, y):
@@ -47,14 +49,17 @@ def mouse_motion(event):
     if not _gb.line_draw: return
     mx = event.motion.x
     my = event.motion.y
-    for x in range(int(len(_gb.map.map)/2) + 1):
-        for y in range(len(_gb.map.map[0]) + 1):
+    jmp = False
+    for x in range(int(len(_gb.map.map)/2) + 10):
+        for y in range(len(_gb.map.map[0]) + 10):
             tx = int(x*2*_gb.tex_x_displace + _gb.map_x_offset + y*_gb.tex_x_displace)
             ty = int(y*_gb.tex_y_displace + _gb.map_y_offset)
-            if (dist(tx, ty, mx, my) < 64) and check_60(_gb.line_start_x,_gb.line_start_y,tx,ty):
+            if (dist(tx, ty, mx, my) < 80) and check_60(_gb.line_start_x,_gb.line_start_y,tx,ty):
                 _gb.line_orientation = orientation(_gb.line_start_x,_gb.line_start_y,tx,ty)
                 _gb.line_end_x = tx
                 _gb.line_end_y = ty
+                break
+        if jmp: break
     if (_gb.line_start_x == _gb.line_end_x) and (_gb.line_start_y == _gb.line_end_y):
         _gb.line_end_x = _gb.line_start_x + 2*_gb.tex_x_displace
 
