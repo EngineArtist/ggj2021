@@ -88,6 +88,7 @@ def main():
     game_init()
     map_read()
     map_render()
+    target_render()
     game_loop()
     game_term()
     return 0

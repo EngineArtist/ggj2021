@@ -114,6 +114,10 @@ class Map:
             for j in range(self.ysize):
                 self.map[i][j].setUncoloured()
 
+    # Get target count
+    def getTarget(self):
+        return self.target
+
     ## INTERNAL USE
 
     # Populate triangle map with instances of Triangle-objects        
@@ -125,7 +129,7 @@ class Map:
         count = 0
         for i in range(self.xsize):
             for j in range(self.ysize):
-                if(self.map[i][j].getActive() and self.map[i][j].getColoured()):
+                if(self.map[i][j].getActive() and not self.map[i][j].getColoured()):
                     count = count + 1
         return count                            
     

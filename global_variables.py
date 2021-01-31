@@ -21,7 +21,9 @@ class State:
         self.tex_x_displace = 70 # Triangle spacing, horizontal
         self.tex_y_displace = 128 # Triangle spacing, vertical
         self.line_draw = False # Whether or not we are drawing a line
-        self.line_rect = SDL_Rect(0, 0, 0, 0) # The starting and ending points for the line        
+        self.line_rect = SDL_Rect(0, 0, 0, 0) # The starting and ending points for the line
+        self.target_x = 1100 # Location to render target number for player
+        self.target_y = 50 # Location to render target number for player
 
 
 # An instance of the global state storage
