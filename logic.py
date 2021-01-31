@@ -44,6 +44,10 @@ def game_loop():
             elif event.type == SDL_MOUSEBUTTONDOWN:
                 # If the player presses a mouse button, handle the input
                 input_handle(event)
+                # After a mouse click we might've solved the level, see if we should progress to next
+                if(_gb.map.validate()):
+                    _gb.map = _gb.levels.getNextLevel()
                 # And just in case something has changed on screen, render everything
                 map_render()
                 break
+        
