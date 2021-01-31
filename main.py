@@ -38,7 +38,9 @@ def game_init():
     # for performing other drawing operations.
     _gb.renderer = SDL_CreateRenderer(_gb.window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
     textures_init()
-
+    # Perform naive splash screen rendering prior to starting the rest of the actual game logic
+    # parameter is sleep time in seconds
+    splash_render_naive(3)
 
 def game_term():
     textures_term()

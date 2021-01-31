@@ -1,3 +1,4 @@
+import time
 from global_variables import _gb
 from sdl2 import *
 from tmath import *
@@ -134,3 +135,23 @@ def text_render_naive(x, y, text):
                 None,
                 SDL_FLIP_NONE
         )
+
+def splash_render_naive(sleeptime):
+    '''
+    Function that renders a naive splash screen and sleeps for a short period of time
+    '''
+    SDL_RenderCopy(_gb.renderer,
+        _gb.tex["trilemma_cover"],
+        None,
+        SDL_Rect(
+            0,
+            0,
+            1200, # Hard coded size of the num textures
+            900
+            ),
+        0,
+        None,
+        SDL_FLIP_NONE
+    )    
+    SDL_RenderPresent(_gb.renderer)
+    time.sleep(sleeptime)
