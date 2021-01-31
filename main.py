@@ -40,7 +40,7 @@ def game_init():
     textures_init()
     # Perform naive splash screen rendering prior to starting the rest of the actual game logic
     # parameter is sleep time in seconds
-    splash_render_naive(3)
+    splash_render_naive(_gb.splash_sleep_time)
 
 def game_term():
     textures_term()
@@ -77,12 +77,6 @@ def textures_term():
 
 
 def map_read():
-    #_gb.map = Map(5, 10, 6)
-    # This is now read at initialization
-    #for x in range(len(_gb.map.map)):
-    #    for y in range(len(_gb.map.map[0])):
-    #        _gb.map.setActiveStateAt(x, y, True)
-    # Read first map upon launch
     _gb.map = _gb.levels.getCurrentLevel()
 
 

@@ -70,10 +70,34 @@ class Levels:
             [ False, False, False, False, False],
             [ False, False, False, False, False]
         ]
+        # Level 3
+        level3 = Map(3, 8, 4) # target 3, 8 x-width, 4 y-height
+        level3actives = [
+            [ False, False, True, False],
+            [ False, True, True, True],
+            [ False, True, True, True],
+            [ False, True, True, True],
+            [ True, True, True, False],
+            [ True, True, True, False],
+            [ True, True, True, False],
+            [ False, True, False, False]
+        ]
+        level3colours = [
+            [ False, False, False, False],
+            [ False, False, False, False],
+            [ False, False, False, False],
+            [ False, False, False, False],
+            [ False, False, False, False],
+            [ False, False, False, False],
+            [ True, False, True, False],
+            [ False, False, False, False]
+        ]
+        
         level0.mapify(level0actives, level0colours)
         level1.mapify(level1actives, level1colours)
         level2.mapify(level2actives, level2colours)
-        self.levellist = [level0, level1, level2]
+        level3.mapify(level3actives, level3colours)
+        self.levellist = [level0, level1, level2, level3]
         
     # Get current level
     def getCurrentLevel(self):

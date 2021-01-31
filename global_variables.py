@@ -28,6 +28,11 @@ class State:
         self.line_coord_x = 0
         self.line_coord_y = 0
         self.line_orientation = -1
+        self.splash_sleep_time = 3 # Sleep time in seconds in initial splash screen
+        self.finished_sleep_time = 2 # Sleep time in seconds after a map is successfully solved
+        self.finished_text = "success"
+        self.finished_text_x = 10
+        self.finished_text_y = 10
 
 
 # An instance of the global state storage
