@@ -21,7 +21,10 @@ class State:
         self.tex_x_displace = 70 # Triangle spacing, horizontal
         self.tex_y_displace = 128 # Triangle spacing, vertical
         self.line_draw = False # Whether or not we are drawing a line
-        self.line_rect = SDL_Rect(0, 0, 0, 0) # The starting and ending points for the line        
+        self.line_start_x = 0
+        self.line_start_y = 0
+        self.line_end_x = 1200
+        self.line_end_y = 900
 
 
 # An instance of the global state storage

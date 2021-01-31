@@ -9,23 +9,43 @@ def dist(tx, ty, mx, my):
     return math.sqrt((mx - tx)**2 + (my - ty)**2)
 
 
-def input_handle(event):
+def check_60(ax, ay, bx, by):
+    pass
+
+
+def mouse_button_down(event):
     mx = event.motion.x
     my = event.motion.y
-    # If a triangle is clicked, toggle its state between unused/uncolored/colored
-    for x in range(len(_gb.map.map)):
-        for y in range(len(_gb.map.map[0])):
-            tx = x*_gb.tex_x_displace + _gb.map_x_offset + y*_gb.tex_x_displace + _gb.tex_x_size/2
-            ty = y*_gb.tex_y_displace + _gb.map_y_offset + _gb.tex_y_size/2
-            if dist(tx, ty, mx, my) < 35:
-                if not _gb.map.map[x][y].active:
-                    _gb.map.map[x][y].setActive()
-                    _gb.map.map[x][y].setUncoloured()
-                else:
-                    if not _gb.map.map[x][y].coloured:
-                        _gb.map.map[x][y].setColoured()
-                    else:
-                        _gb.map.map[x][y].setInactive()
+    for x in range(int(len(_gb.map.map)/2) + 1):
+        for y in range(len(_gb.map.map[0]) + 1):
+            tx = x*2*_gb.tex_x_displace + _gb.map_x_offset + y*_gb.tex_x_displace
+            ty = y*_gb.tex_y_displace + _gb.map_y_offset
+            if dist(tx, ty, mx, my) < 64:
+                _gb.line_draw = True
+                _gb.line_start_x = int(tx)
+                _gb.line_start_y = int(ty)
+                _gb.line_end_x = _gb.line_start_x + 2*_gb.tex_x_displace
+                _gb.line_end_y = _gb.line_start_y
+    
+
+def mouse_button_up(event):
+    _gb.line_draw = False
+
+
+def mouse_motion(event):
+    if not _gb.line_draw: return
+    mx = event.motion.x
+    my = event.motion.y
+    for x in range(int(len(_gb.map.map)/2) + 1):
+        for y in range(len(_gb.map.map[0]) + 1):
+            tx = x*2*_gb.tex_x_displace + _gb.map_x_offset + y*_gb.tex_x_displace
+            ty = y*_gb.tex_y_displace + _gb.map_y_offset
+            if dist(tx, ty, mx, my) < 64:
+                _gb.line_draw = True
+                _gb.line_end_x = int(tx)
+                _gb.line_end_y = int(ty)
+    if (_gb.line_start_x == _gb.line_end_x) and (_gb.line_start_y == _gb.line_end_y):
+        _gb.line_end_x = _gb.line_start_x + 2*_gb.tex_x_displace
 
 
 def game_loop():
@@ -43,11 +63,24 @@ def game_loop():
                     break
             elif event.type == SDL_MOUSEBUTTONDOWN:
                 # If the player presses a mouse button, handle the input
-                input_handle(event)
+                mouse_button_down(event)
                 # After a mouse click we might've solved the level, see if we should progress to next
                 if(_gb.map.validate()):
                     _gb.map = _gb.levels.getNextLevel()
                 # And just in case something has changed on screen, render everything
                 map_render()
                 break
+            elif event.type == SDL_MOUSEBUTTONUP:
+                mouse_button_up(event)
+                # After a mouse click we might've solved the level, see if we should progress to next
+                if(_gb.map.validate()):
+                    _gb.map = _gb.levels.getNextLevel()
+                # And just in case something has changed on screen, render everything
+                map_render()
+                break
+            elif event.type == SDL_MOUSEMOTION:
+                mouse_motion(event)
+                map_render()
+                break
+
         

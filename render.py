@@ -25,6 +25,30 @@ def triangle_render(x, y, f, coloured):
     )
 
 
+def line_render(start_x, start_y, end_x, end_y):
+    SDL_SetRenderDrawColor(_gb.renderer, 80, 80, 80, 100)
+    SDL_SetRenderDrawBlendMode(_gb.renderer, SDL_BLENDMODE_BLEND)
+    SDL_RenderDrawLine(
+        _gb.renderer,
+        start_x,
+        start_y,
+        end_x,
+        end_y
+    )
+
+
+def flip_line_render(start_x, start_y, end_x, end_y):
+    dx = end_x - start_x
+    dy = end_y - start_y
+    start_x -= dx*100
+    start_y -= dy*100
+    end_x += dx*100
+    end_y += dy*100
+    line_render(start_x, start_y, end_x, end_y)
+    line_render(start_x + 1, start_y, end_x + 1, end_y)
+    line_render(start_x, start_y + 1, end_x, end_y + 1)
+
+
 def map_render():
     '''
     Render the currently loaded Map on screen, along with the background image.
@@ -38,5 +62,15 @@ def map_render():
             tx = _gb.tex['triangle01'] if t.coloured else _gb.tex['triangle05']
             f = x%2
             triangle_render(x, y, f, t.coloured)
+    # If the player is dragging a line, draw it
+    if _gb.line_draw:
+        SDL_SetRenderDrawColor(_gb.renderer, 80, 80, 80, 100)
+        SDL_SetRenderDrawBlendMode(_gb.renderer, SDL_BLENDMODE_BLEND)
+        flip_line_render(
+            _gb.line_start_x,
+            _gb.line_start_y,
+            _gb.line_end_x,
+            _gb.line_end_y,
+        )
     # Finally call SDL_RenderPresent on an SDL_Renderer to display the new frame on screen.
     SDL_RenderPresent(_gb.renderer)
