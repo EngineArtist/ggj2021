@@ -32,11 +32,14 @@ def mouse_button_up(event):
     _gb.line_draw = False
     if _gb.line_orientation >= 0:
         if (_gb.line_orientation == 0) or (_gb.line_orientation == 3):
+            print("- " + str(_gb.line_coord_y) + " " + str(_gb.line_orientation))
             _gb.map.line(0, _gb.line_coord_y, _gb.line_orientation == 3)
-        elif (_gb.line_orientation == 1) or (_gb.line_orientation == 4):
+        elif (_gb.line_orientation == 1) or (_gb.line_orientation == 4):            
             _gb.map.line(1, corrected_coord(_gb.line_coord_x, _gb.line_coord_y), _gb.line_orientation == 1)
+            print("/ " + str(corrected_coord(_gb.line_coord_x, _gb.line_coord_y)) + " " + str(_gb.line_orientation))
         elif (_gb.line_orientation == 2) or (_gb.line_orientation == 5):
             _gb.map.line(2, _gb.line_coord_x, _gb.line_orientation == 2)
+            print("\\ " + str(_gb.line_coord_x) + " " + str(_gb.line_orientation))
 
 
 def mouse_motion(event):

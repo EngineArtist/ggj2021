@@ -45,7 +45,7 @@ class Map:
                         self.flipcount = self.flipcount + 1
                         ## TODO: Send message to graphics device to draw animation for flip(s)?
             else:                
-                for j in range(coord+1, self.ysize):
+                for j in range(coord, self.ysize):
                     for i in range(self.xsize):
                         self.map[i][j].flip()
                         self.flipcount = self.flipcount + 1
