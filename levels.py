@@ -8,6 +8,20 @@ class Levels:
 
     # Update or reset mapify statuses
     def runMapifyList(self):
+        # Level 0 ("tutorial")
+        level0 = Map(3, 4, 2) # target 3, 8 x-width, 4 y-height
+        level0actives = [
+            [ False, True],
+            [ True, True],
+            [ True, True],
+            [ True, False]
+        ]
+        level0colours = [
+            [ False, False],
+            [ False, False],
+            [ False, False],
+            [ False, False]
+        ]
         # Level 1
         level1 = Map(3, 8, 4) # target 3, 8 x-width, 4 y-height
         level1actives = [
@@ -56,9 +70,10 @@ class Levels:
             [ False, False, False, False, False],
             [ False, False, False, False, False]
         ]
+        level0.mapify(level0actives, level0colours)
         level1.mapify(level1actives, level1colours)
         level2.mapify(level2actives, level2colours)
-        self.levellist = [level1, level2]
+        self.levellist = [level0, level1, level2]
         
     # Get current level
     def getCurrentLevel(self):
