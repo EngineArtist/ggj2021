@@ -50,10 +50,8 @@ def target_render():
                    _gb.tex[numnames[_gb.map.getTarget()]],
                            None,
                            SDL_Rect(
-                               #_gb.target_x,
-                               10,
-                               #_gb.target_y,
-                               10,
+                               _gb.target_x,
+                               _gb.target_y,
                                62, # Hard coded size of the num textures
                                62
                             ),

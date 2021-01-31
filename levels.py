@@ -4,6 +4,10 @@ class Levels:
     # When creating the levels class, presumably we start at the first level
     def __init__(self):
         self.current_level = 0
+        self.runMapifyList()        
+
+    # Update or reset mapify statuses
+    def runMapifyList(self):
         # Level 1
         level1 = Map(3, 8, 4) # target 3, 8 x-width, 4 y-height
         level1actives = [
@@ -26,7 +30,6 @@ class Levels:
             [ False, False, False, False],
             [ False, False, False, False]
         ]
-        level1.mapify(level1actives, level1colours)
         # Level 2
         level2 = Map(5, 10, 5) # target 5, 10 x-width, 5 y-height
         level2actives = [
@@ -53,8 +56,8 @@ class Levels:
             [ False, False, False, False, False],
             [ False, False, False, False, False]
         ]
+        level1.mapify(level1actives, level1colours)
         level2.mapify(level2actives, level2colours)
-        
         self.levellist = [level1, level2]
         
     # Get current level
