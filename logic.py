@@ -1,16 +1,8 @@
-import math
 import ctypes
 from sdl2 import *
 from render import *
 from global_variables import _gb
-
-
-def dist(tx, ty, mx, my):
-    return math.sqrt((mx - tx)**2 + (my - ty)**2)
-
-
-def check_60(ax, ay, bx, by):
-    pass
+from tmath import *
 
 
 def mouse_button_down(event):
@@ -21,15 +13,30 @@ def mouse_button_down(event):
             tx = x*2*_gb.tex_x_displace + _gb.map_x_offset + y*_gb.tex_x_displace
             ty = y*_gb.tex_y_displace + _gb.map_y_offset
             if dist(tx, ty, mx, my) < 64:
+                print(str(x) + ', ' + str(y))
                 _gb.line_draw = True
+                _gb.line_coord_x = x
+                _gb.line_coord_y = y
                 _gb.line_start_x = int(tx)
                 _gb.line_start_y = int(ty)
                 _gb.line_end_x = _gb.line_start_x + 2*_gb.tex_x_displace
                 _gb.line_end_y = _gb.line_start_y
-    
+                break
+
+
+def corrected_coord(x, y):
+    return x + y*2
+
 
 def mouse_button_up(event):
     _gb.line_draw = False
+    if _gb.line_orientation >= 0:
+        if (_gb.line_orientation == 0) or (_gb.line_orientation == 3):
+            _gb.map.line(0, _gb.line_coord_y, _gb.line_orientation == 3)
+        elif (_gb.line_orientation == 1) or (_gb.line_orientation == 4):
+            _gb.map.line(1, corrected_coord(_gb.line_coord_x, _gb.line_coord_y), _gb.line_orientation == 1)
+        elif (_gb.line_orientation == 2) or (_gb.line_orientation == 5):
+            _gb.map.line(2, _gb.line_coord_x, _gb.line_orientation == 2)
 
 
 def mouse_motion(event):
@@ -38,12 +45,12 @@ def mouse_motion(event):
     my = event.motion.y
     for x in range(int(len(_gb.map.map)/2) + 1):
         for y in range(len(_gb.map.map[0]) + 1):
-            tx = x*2*_gb.tex_x_displace + _gb.map_x_offset + y*_gb.tex_x_displace
-            ty = y*_gb.tex_y_displace + _gb.map_y_offset
-            if dist(tx, ty, mx, my) < 64:
-                _gb.line_draw = True
-                _gb.line_end_x = int(tx)
-                _gb.line_end_y = int(ty)
+            tx = int(x*2*_gb.tex_x_displace + _gb.map_x_offset + y*_gb.tex_x_displace)
+            ty = int(y*_gb.tex_y_displace + _gb.map_y_offset)
+            if (dist(tx, ty, mx, my) < 64) and check_60(_gb.line_start_x,_gb.line_start_y,tx,ty):
+                _gb.line_orientation = orientation(_gb.line_start_x,_gb.line_start_y,tx,ty)
+                _gb.line_end_x = tx
+                _gb.line_end_y = ty
     if (_gb.line_start_x == _gb.line_end_x) and (_gb.line_start_y == _gb.line_end_y):
         _gb.line_end_x = _gb.line_start_x + 2*_gb.tex_x_displace
 

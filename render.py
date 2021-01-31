@@ -1,5 +1,6 @@
 from global_variables import _gb
 from sdl2 import *
+from tmath import *
 
 
 def triangle_render(x, y, f, coloured):
@@ -26,24 +27,36 @@ def triangle_render(x, y, f, coloured):
 
 
 def line_render(start_x, start_y, end_x, end_y):
-    SDL_SetRenderDrawColor(_gb.renderer, 80, 80, 80, 100)
     SDL_SetRenderDrawBlendMode(_gb.renderer, SDL_BLENDMODE_BLEND)
+    SDL_SetRenderDrawColor(_gb.renderer, 100, 90, 80, 70)
     SDL_RenderDrawLine(
         _gb.renderer,
-        start_x,
-        start_y,
-        end_x,
-        end_y
+        int(start_x),
+        int(start_y),
+        int(end_x),
+        int(end_y)
     )
 
 
 def flip_line_render(start_x, start_y, end_x, end_y):
+    sx = start_x
+    sy = start_y
     dx = end_x - start_x
     dy = end_y - start_y
+    nx = -dy
+    ny = dx
+    mn = magn(nx, ny)
+    nx /= mn
+    ny /= mn
+    nx *= 75
+    ny *= 75
     start_x -= dx*100
     start_y -= dy*100
     end_x += dx*100
     end_y += dy*100
+    line_render(sx, sy, sx + nx, sy + ny)
+    line_render(sx + 1, sy, sx + nx + 1, sy + ny)
+    line_render(sx, sy + 1, sx + nx, sy + ny + 1)
     line_render(start_x, start_y, end_x, end_y)
     line_render(start_x + 1, start_y, end_x + 1, end_y)
     line_render(start_x, start_y + 1, end_x, end_y + 1)
@@ -64,8 +77,6 @@ def map_render():
             triangle_render(x, y, f, t.coloured)
     # If the player is dragging a line, draw it
     if _gb.line_draw:
-        SDL_SetRenderDrawColor(_gb.renderer, 80, 80, 80, 100)
-        SDL_SetRenderDrawBlendMode(_gb.renderer, SDL_BLENDMODE_BLEND)
         flip_line_render(
             _gb.line_start_x,
             _gb.line_start_y,
