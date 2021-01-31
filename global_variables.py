@@ -12,8 +12,8 @@ class State:
         self.running = True # Whether game is running or not
         self.levels = Levels() # Load all available game maps
         self.map = None # The full state of the map
-        self.screen_x = 1200
-        self.screen_y = 900
+        self.screen_x = 1920
+        self.screen_y = 1080
         self.map_x_offset = 50 # Map render offset from the left side of the screen
         self.map_y_offset = 75 # Map render offset from the top of the screen
         self.tex_x_size = 128 # Triangle texture width

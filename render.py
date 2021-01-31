@@ -146,8 +146,10 @@ def splash_render_naive(sleeptime):
         SDL_Rect(
             0,
             0,
-            1200, # Hard coded size of the num textures
-            900
+            #1200,
+            1920,
+            #900
+            1080
             ),
         0,
         None,
