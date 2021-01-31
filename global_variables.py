@@ -28,8 +28,6 @@ class State:
         self.line_coord_x = 0
         self.line_coord_y = 0
         self.line_orientation = -1
-        self.target_x = 0
-        self.target_y = 0
 
 
 # An instance of the global state storage

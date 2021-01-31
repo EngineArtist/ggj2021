@@ -22,7 +22,7 @@ def game_init():
     # The SDL-api reference is here: https://wiki.libsdl.org/APIByCategory
     SDL_Init(SDL_INIT_VIDEO)
     _gb.window = SDL_CreateWindow(
-        b'Trilemma', # Since we're calling straight into a C-api, we need to pass strings as bytes
+        b'Trilemma Notebook', # Since we're calling straight into a C-api, we need to pass strings as bytes
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
         _gb.screen_x,

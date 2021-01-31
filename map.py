@@ -36,52 +36,48 @@ class Map:
     # Direction is a boolean indicating which way the arrow points (True is upwards or rightwards)
     # TODO: The coordinates still need double-checking, to make sure they work right...
     def line(self, line, coord, direction):
-        if((line == 0 or line == '-') and coord <= self.ysize and coord >= 0):
+        if(line == 0 or line == '-'):
             self.linecount = self.linecount + 1
             if(direction):
                 for j in range(0, coord):
                     for i in range(self.xsize):
                         self.map[i][j].flip()
                         self.flipcount = self.flipcount + 1
-                        ## TODO: Send message to graphics device to draw animation for flip(s)?
             else:                
                 for j in range(coord, self.ysize):
                     for i in range(self.xsize):
                         self.map[i][j].flip()
                         self.flipcount = self.flipcount + 1
-                        ## TODO: Send message to graphics device to draw animation for flip(s)?
-        elif((line == 1 or line == '/') and coord*2 <= self.xsize and coord*2 >= 0):
+        elif(line == 1 or line == '/'):
             coord = coord * 2
             self.linecount = self.linecount + 1
             if(direction):
                 for j in range(self.ysize):
                     for i in range(self.xsize):
-                        if(i >= coord - j*2 - 1):
+                        if((i >= coord - j*2 - 1) and i<len(self.map) and j<len(self.map[0])):
                             self.map[i][j].flip()
                             self.flipcount = self.flipcount + 1
-                            ## TODO: Send message to graphics device to draw animation for flip(s)?
             else:
                 for j in range(self.ysize):
                     for i in range(self.xsize) :
-                        if(i < coord - j*2 - 1):
+                        if((i < coord - j*2 - 1) and i<len(self.map) and j<len(self.map[0])):
                             self.map[i][j].flip()
                             self.flipcount = self.flipcount + 1
-                            ## TODO: Send message to graphics device to draw animation for flip(s)?
-        elif((line == 2 or line == '\\') and coord*2 <= self.xsize and coord*2 >= 0):
+        elif(line == 2 or line == '\\'):
             coord = coord * 2            
             self.linecount = self.linecount + 1
             if(direction):
                 for i in range(coord, self.xsize):
                     for j in range(self.ysize) :
-                        self.map[i][j].flip()
-                        self.flipcount = self.flipcount + 1
-                        ## TODO: Send message to graphics device to draw animation for flip(s)?
+                        if(i<len(self.map) and j<len(self.map[0])):
+                            self.map[i][j].flip()
+                            self.flipcount = self.flipcount + 1                        
             else:                
                 for i in range(0,coord):
                     for j in range(self.ysize):
-                        self.map[i][j].flip()
-                        self.flipcount = self.flipcount + 1
-                        ## TODO: Send message to graphics device to draw animation for flip(s)?
+                        if(i<len(self.map) and j<len(self.map[0])):
+                            self.map[i][j].flip()
+                            self.flipcount = self.flipcount + 1
         
 
     # Test if map has been solved successfully; true if so, false if not
@@ -117,6 +113,10 @@ class Map:
     # Get target count
     def getTarget(self):
         return self.target
+
+    # Get line operation count
+    def getLinecount(self):
+        return self.linecount
 
     ## INTERNAL USE
 
@@ -163,7 +163,6 @@ class Map:
                     else:
                         string = string + "[0] "
                 else:
-                    string = string + " -  "
-            
+                    string = string + " -  "            
         return string    
         

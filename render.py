@@ -91,13 +91,14 @@ def target_render():
     '''
     Render the target of desired white triangles in final solution
     '''
+    # Note: Quick and dirty hard-coded locations into serve as the user interface
     numnames = ['num_0', 'num_1', 'num_2', 'num_3', 'num_4', 'num_5', 'num_6', 'num_7', 'num_8', 'num_9']
     SDL_RenderCopy(_gb.renderer,
                    _gb.tex[numnames[_gb.map.getTarget()]],
                            None,
                            SDL_Rect(
-                               _gb.target_x,
-                               _gb.target_y,
+                               10,
+                               10,
                                62, # Hard coded size of the num textures
                                62
                             ),
@@ -106,3 +107,22 @@ def target_render():
                            SDL_FLIP_NONE
                     )
 
+def text_render_naive(x, y, text):
+    '''
+    Naive rendering of text using 62x62 sprites
+    '''
+    letnames = ['let_a', 'let_b', 'let_c', 'let_d', 'let_e', 'let_f', 'let_g', 'let_h', 'let_i', 'let_j', 'let_k', 'let_l', 'let_m', 'let_n', 'let_o', 'let_p', 'let_q', 'let_r', 'let_s', 'let_t', 'let_u', 'let_v', 'let_w', 'let_x', 'let_y', 'let_z']
+    for index in len(list(text)):
+        SDL_RenderCopy(_gb.renderer,
+            _gb.tex[numnames[_gb.map.getTarget()]],
+                None,
+                    SDL_Rect(
+                    10,
+                    10,
+                    62, # Hard coded size of the num textures
+                    62
+                    ),
+                0,
+                None,
+                SDL_FLIP_NONE
+        )
