@@ -94,7 +94,7 @@ def game_loop():
                     _gb.map = _gb.levels.getNextLevel()
                 # And just in case something has changed on screen, render everything
                 map_render()
-                target_render()
+                #target_render()
                 break
             elif event.type == SDL_MOUSEMOTION:
                 mouse_motion(event)

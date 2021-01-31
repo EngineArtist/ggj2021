@@ -83,22 +83,29 @@ def map_render():
             _gb.line_end_x,
             _gb.line_end_y,
         )
+    # Naive UI drawn on bottom-left
+    number_render_naive(500, 750, _gb.map.getFlipcount())
+    text_render_naive(10, 750, "flips")
+    number_render_naive(500, 800, _gb.map.getLinecount())
+    text_render_naive(10, 800, "lines")
+    number_render_naive(500, 850, _gb.map.getTarget())
+    text_render_naive(10, 850, "target")
     # Finally call SDL_RenderPresent on an SDL_Renderer to display the new frame on screen.
-    target_render()
     SDL_RenderPresent(_gb.renderer)
 
-def target_render():
+def number_render_naive(x, y, number):
     '''
     Render the target of desired white triangles in final solution
     '''
     # Note: Quick and dirty hard-coded locations into serve as the user interface
     numnames = ['num_0', 'num_1', 'num_2', 'num_3', 'num_4', 'num_5', 'num_6', 'num_7', 'num_8', 'num_9']
-    SDL_RenderCopy(_gb.renderer,
-                   _gb.tex[numnames[_gb.map.getTarget()]],
+    for index in range(len(list(str(number)))):
+        SDL_RenderCopy(_gb.renderer,
+                   _gb.tex[numnames[int(list(str(number))[index])]],
                            None,
                            SDL_Rect(
-                               10,
-                               10,
+                               x + index*60,
+                               y,
                                62, # Hard coded size of the num textures
                                62
                             ),
@@ -112,13 +119,14 @@ def text_render_naive(x, y, text):
     Naive rendering of text using 62x62 sprites
     '''
     letnames = ['let_a', 'let_b', 'let_c', 'let_d', 'let_e', 'let_f', 'let_g', 'let_h', 'let_i', 'let_j', 'let_k', 'let_l', 'let_m', 'let_n', 'let_o', 'let_p', 'let_q', 'let_r', 'let_s', 'let_t', 'let_u', 'let_v', 'let_w', 'let_x', 'let_y', 'let_z']
-    for index in len(list(text)):
+    for index in range(len(list(text))):
         SDL_RenderCopy(_gb.renderer,
-            _gb.tex[numnames[_gb.map.getTarget()]],
+            # 97th element in ordered characters is 'a'                       
+            _gb.tex[letnames[ord(list(text)[index])-97]],
                 None,
                     SDL_Rect(
-                    10,
-                    10,
+                    x + index*60,
+                    y,
                     62, # Hard coded size of the num textures
                     62
                     ),

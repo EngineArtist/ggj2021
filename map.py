@@ -118,6 +118,10 @@ class Map:
     def getLinecount(self):
         return self.linecount
 
+    # Get number of flipped triangles
+    def getFlipcount(self):
+        return self.flipcount
+
     ## INTERNAL USE
 
     # Populate triangle map with instances of Triangle-objects        
