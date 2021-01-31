@@ -84,6 +84,7 @@ def map_render():
             _gb.line_end_y,
         )
     # Finally call SDL_RenderPresent on an SDL_Renderer to display the new frame on screen.
+    target_render()
     SDL_RenderPresent(_gb.renderer)
 
 def target_render():
@@ -104,4 +105,4 @@ def target_render():
                            None,
                            SDL_FLIP_NONE
                     )
-    SDL_RenderPresent(_gb.renderer)    
+

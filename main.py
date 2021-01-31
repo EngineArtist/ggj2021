@@ -36,7 +36,7 @@ def game_init():
     # More documentation on SDL_Renderers can be found here: https://wiki.libsdl.org/CategoryRender
     # Note: see the SDL_RenderDrawLine -function for drawing lines, and other SDL_Render* -functions
     # for performing other drawing operations.
-    _gb.renderer = SDL_CreateRenderer(_gb.window, -1, SDL_RENDERER_ACCELERATED)
+    _gb.renderer = SDL_CreateRenderer(_gb.window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
     textures_init()
 
 
@@ -88,7 +88,6 @@ def main():
     game_init()
     map_read()
     map_render()
-    target_render()
     game_loop()
     game_term()
     return 0
